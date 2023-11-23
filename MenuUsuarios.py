@@ -18,7 +18,6 @@ def MenuUsuarios():
 
   if inicio==1:
     import Clientes.buscarCliente as buscarCliente
-    buscarCliente
   elif inicio==2:
     import Clientes.novoCliente as novoCliente
     novoCliente
@@ -28,7 +27,6 @@ def MenuUsuarios():
     MenuUsuarios()
   elif inicio==5:
     import MenuPrincipal
-    MenuPrincipal
   else:
     print('\nResposta invalida! Tente novamente \n') 
     MenuUsuarios()

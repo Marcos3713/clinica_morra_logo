@@ -14,11 +14,9 @@ def main():
     resposta: """))
 
   if inicio==1:
-    import MenuUsuarios as MenuUsuarios
-    MenuUsuarios
+    import MenuUsuarios
   elif inicio==2:
-    import MenuMedicos as MenuMedicos
-    MenuMedicos
+    import MenuMedicos
   elif inicio==3:
     print('aba exames')
   else:

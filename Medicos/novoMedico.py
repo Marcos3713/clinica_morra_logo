@@ -38,8 +38,6 @@ Resposta: '''))
     cursor.execute(f"INSERT INTO Doctor (_id,Name,CRM,Specialty) VALUES ({Gerar_id},'{Inserir_nome}','{Inserir_crm}','{Inserir_especialidade}')")
     con.commit()
     print('Medico cadastrado com sucesso!!')
-    import MenuPrincipal as MenuPrincipal
-    MenuPrincipal
   else:
     print('Comece o cadastro novamente!')  
     aba_cadastro_medico()

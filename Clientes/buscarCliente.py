@@ -1,10 +1,11 @@
 import sqlite3
-import random
 from sqlite3 import Error
+
 
 error = Error
 
 def aba_de_busca():
+  global busca
   busca=str(input('''\/ Buscar Clientes \/
   informe o CPF:'''))
   
@@ -13,11 +14,12 @@ def aba_de_busca():
   cursor.execute(f"SELECT * FROM User WHERE cpf = {busca}")
   global response
   response = cursor.fetchall()
-  if cursor.fetchall()==None: 
+  if cursor.fetchall()==[]: 
     print("\nUsuário não encontrado!")
+    aba_de_confirmacao2()
   else:
     print('\nDados do paciente. \n')
-    print(response[0])
+    aba_de_confirmacao()
 
 def aba_de_confirmacao():
   for linha in response:
@@ -26,7 +28,8 @@ Nome:{linha[1]}
 Cpf:{linha[2]}
 Data de nascimento:{linha[3]}
 Telefone:{linha[4]}
-Endereço:{linha[5]}''')
+Endereço:{linha[5]}, {linha[6]} - {linha[7]}, {linha[9]}/{linha[10]}
+Complemento: {linha[8]}''')
   confirmar=int(input(''' 
     (1)Marcar Exame
     (2)editar informações
@@ -36,38 +39,31 @@ Endereço:{linha[5]}''')
   if confirmar==1:
     print('aba de marcar exame')
   elif confirmar==2:
-    print("Editar informações")
+    editar_paciente()
   elif confirmar==3:
-    print('deletar cliente')
+    deletar_cliente()
   elif confirmar==4:
-    print("retornar ao menu")
-    import Menu
-    Menu
+    import MenuPrincipal as MenuPrincipal
+    MenuPrincipal
   else:
     aba_de_confirmacao()
     
 
-  
-
 def aba_de_confirmacao2(): 
   confirmar=int(input(''' 
-    (1)Marcar Exame
-    (2)Editar Informações
-    (3)Deletar Cliente                  
-    (4)Retornar ao menu principal
+    (1) Tenta novamente
+    (2) Cadastrar novo cliente
+    (3) Retornar ao menu principal                   
     RESPOSTA:'''))
   if confirmar==1:
-    print('aba de marcar exame')
+    aba_de_busca
   elif confirmar==2:
-    editar()
+    import novoCliente
+    novoCliente
   elif confirmar==3:
-    deletar_cliente()
-  elif confirmar==4:
-    print("retornar ao menu")
     import MenuPrincipal
-    MenuPrincipal
   else:
-    aba_de_confirmacao()
+    aba_de_confirmacao2()
 
 def deletar_cliente():
   certeza=int(input('''tem certeza que deseja deletar os registros desse cliente?
@@ -81,15 +77,14 @@ def deletar_cliente():
     cursor = con.cursor()
     cursor.execute(f"DELETE FROM User WHERE cpf = {cord}")
     con.commit()
-    import Rotas.MenuUsuarios as MenuUsuarios
-    MenuUsuarios
+    print('Paciente deletado com sucesso')
   elif certeza==2:
     aba_de_confirmacao()
   else:
     print('resposta invalida')
     deletar_cliente()
 
-def editar():
+def editar_paciente():
   coluna=''
   textoAlter=''  
   edit=int(input('''Qual das informações deseja editar:
@@ -100,9 +95,9 @@ def editar():
         (5) Endereço;
         (6) Número;
         (7) Bairro;
-        (3) Complemento;
-        (4) Cidade;
-        (5) UF;
+        (8) Complemento;
+        (9) Cidade;
+        (10) UF;
         Resposta:'''))
   if edit==1:
     coluna='Name'
@@ -147,5 +142,5 @@ def editar():
   aba_de_confirmacao()  
 
 aba_de_busca()
-aba_de_confirmacao() 
+
     

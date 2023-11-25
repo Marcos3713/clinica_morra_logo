@@ -5,7 +5,7 @@ from sqlite3 import Error
 
 error = Error
 
-def MenuUsuarios():
+def Menu_Usuarios():
   inicio=int(input("""        
   Área de CLIENTES!!
   o que você deseja fazer?:
@@ -20,7 +20,6 @@ def MenuUsuarios():
     import Clientes.buscarCliente as buscarCliente
   elif inicio==2:
     import Clientes.novoCliente as novoCliente
-    novoCliente
   elif inicio==3:
     MenuUsuarios()
   elif inicio==4:

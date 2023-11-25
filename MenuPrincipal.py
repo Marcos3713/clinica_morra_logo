@@ -3,6 +3,7 @@ import random
 from sqlite3 import Error
 error = Error
 
+
 def main():
   #Pagina inicial do programa para direcionar a pessoa que acessa
   inicio=int(input("""
@@ -15,10 +16,13 @@ def main():
 
   if inicio==1:
     import MenuUsuarios
+    main()
   elif inicio==2:
     import MenuMedicos
+    main()
   elif inicio==3:
     print('aba exames')
+    main()
   else:
     print('\n')
     print('Resposta invalida! Tente novamente \n')

@@ -5,9 +5,9 @@ from sqlite3 import Error
 
 error = Error
 
-def MenuMedicos():
+class MenuMedicos():
   inicio=int(input("""        
-  Área de CLIENTES!!
+  Área dos MEDICOS!!
   o que você deseja fazer?:
   1) Buscar um Medico
   2) Cadastrar um Medico

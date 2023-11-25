@@ -43,8 +43,7 @@ Complemento: {linha[8]}''')
   elif confirmar==3:
     deletar_cliente()
   elif confirmar==4:
-    import MenuPrincipal as MenuPrincipal
-    MenuPrincipal
+    print('Retornando...')
   else:
     aba_de_confirmacao()
     
@@ -61,7 +60,7 @@ def aba_de_confirmacao2():
     import novoCliente
     novoCliente
   elif confirmar==3:
-    import MenuPrincipal
+    MenuUsuario.Menu_Usuarios()
   else:
     aba_de_confirmacao2()
 

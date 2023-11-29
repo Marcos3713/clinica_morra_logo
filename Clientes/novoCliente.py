@@ -1,18 +1,15 @@
 import sqlite3
 import random
-
 from sqlite3 import Error
-
 error = Error
 
-def aba_cadastro_cliente():
+class novoCliente():
   global Gerar_id
   Gerar_id=random.randint(10000,100000)
   global Inserir_cpf
   print('\n # Cadastrar um Novo Cliente! \n')
   Inserir_cpf=str(input(' Informe o CPF:'))
   
-
   con = sqlite3.connect('projeto')
   cursor = con.cursor()
   cursor.execute("SELECT * FROM User")
@@ -22,7 +19,7 @@ def aba_cadastro_cliente():
   for linha in linhas:
     if Inserir_cpf==linha[2]:
       print("\n cpf já existente\n")
-      aba_cadastro_cliente()
+      novoCliente()
       
   global Inserir_nome
   Inserir_nome=str(input(' Nome do paciente: '))
@@ -43,7 +40,7 @@ def aba_cadastro_cliente():
   global Inserir_UF
   Inserir_UF=str(input(' UF:'))
   
-def confirmar_informações_do_cliente():
+class confirmar_informações_do_cliente():
   confirmar=int(input(f'''
     Deseja confirmar as informações?
     Nome:{Inserir_nome}
@@ -61,11 +58,11 @@ def confirmar_informações_do_cliente():
     cursor.execute(f"INSERT INTO User (ID,Name,Birthday,CPF,Telephone,Address,AdressNumber,District,Complement,City,UF) VALUES ({Gerar_id},'{Inserir_nome}','{Inserir_dataDeNascimento}','{Inserir_cpf}','{Inserir_telefone}','{Inserir_Endereço}','{Inserir_Numero}','{Inserir_Bairro}','{Inserir_Complemento}','{Inserir_Cidade}','{Inserir_UF}')")
     con.commit()
     print('\nCliente cadastrado com sucesso!!')
-    main() 
+    import MenuPrincipal 
   else:
     print('Comece o cadastro novamente!')  
-    aba_cadastro_cliente()
+    novoCliente()
     
-aba_cadastro_cliente()
+novoCliente()
 confirmar_informações_do_cliente()
 

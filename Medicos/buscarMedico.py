@@ -1,12 +1,10 @@
 import sqlite3
 from sqlite3 import Error
-
-
 error = Error
 
-def aba_de_busca():
+class buscarMedico():
   global busca
-  busca=str(input('''\/ Buscar Medico \/
+  busca=str(input('''\/ Buscar Médico \/
   informe o CRM:'''))
   
   con = sqlite3.connect('projeto')
@@ -15,13 +13,13 @@ def aba_de_busca():
   global response
   response = cursor.fetchall()
   if cursor.fetchall()==[]: 
-    print("\nFuncionario não encontrado!")
+    print("\nMédico não encontrado!")
     aba_de_confirmacao2()
   else:
     print('\nDados do Médico. \n')
     aba_de_confirmacao()
 
-def aba_de_confirmacao():
+class aba_de_confirmacao():
   for linha in response:
     print(f'''\nID:{linha[0]}
 Nome:{linha[1]}
@@ -37,29 +35,27 @@ Especialidade:{linha[3]}''')
   elif confirmar==2:
     deletar_medico()
   elif confirmar==3:
-    print('retornar ao menu')
+    import MenuPrincipal
   else:
     aba_de_confirmacao()
     
-
-def aba_de_confirmacao2(): 
+class aba_de_confirmacao2(): 
   confirmar=int(input(''' 
     (1) Tenta novamente
-    (2) Cadastrar novo Medico
+    (2) Cadastrar novo Médico
     (3) Retornar ao menu principal                   
     RESPOSTA:'''))
   if confirmar==1:
-    aba_de_busca
+    buscarMedico()
   elif confirmar==2:
-    import novoCliente
-    novoCliente
+    import cadastrarMedico
   elif confirmar==3:
-    print('retornar')
+    import MenuPrincipal
   else:
     aba_de_confirmacao2()
 
-def deletar_medico():
-  certeza=int(input('''tem certeza que deseja deletar os registros desse cliente?
+class deletar_medico():
+  certeza=int(input('''tem certeza que deseja deletar os registros desse médico?
   (1)sim
   (2)não
   resposta:'''))
@@ -70,15 +66,15 @@ def deletar_medico():
     cursor = con.cursor()
     cursor.execute(f"DELETE FROM Doctor WHERE CRM= {cord}")
     con.commit()
-    print('Paciente deletado com sucesso')
-    aba_de_busca()
+    print('Médico deletado com sucesso')
+    buscarMedico()
   elif certeza==2:
     aba_de_confirmacao()
   else:
     print('resposta invalida')
     deletar_cliente()
 
-def editar_dados():
+class editar_dados():
   coluna=''
   textoAlter=''  
   edit=int(input('''Qual das informações deseja editar:
@@ -107,6 +103,6 @@ def editar_dados():
   print('Usuario Alterado com sucesso!!!')
   aba_de_confirmacao()  
 
-aba_de_busca()
+buscarMedico()
 
     

@@ -3,7 +3,7 @@ import random
 from sqlite3 import Error
 error = Error
 
-def aba_cadastro_medico():
+class cadastrarMedico():
   global Gerar_id
   Gerar_id=random.randint(10000,100000)    
   global Inserir_nome
@@ -27,7 +27,7 @@ def aba_cadastro_medico():
   cont=int(input('Digite o numero do medico escolhido:'))
   
   
-def confirmar_informações_do_medico():
+class confirmar_informações_do_medico():
   confirmar=int(input(f'''\nDeseja confirmar as informações?(1)sim (2)não\n
 Nome: {Inserir_nome}
 valor: {Inserir_valor}.00
@@ -42,7 +42,7 @@ Resposta: '''))
     print('cadastrado finalizado com sucesso!!')
   else:
     print('Comece o cadastro novamente!')  
-    aba_cadastro_medico()
+    cadastrarMedico()
     
-aba_cadastro_medico()
+cadastrarMedico()
 confirmar_informações_do_medico()

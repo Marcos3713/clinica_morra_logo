@@ -1,11 +1,4 @@
-import sqlite3
-import random
-from sqlite3 import Error
-error = Error
-
-
-def main():
-  #Pagina inicial do programa para direcionar a pessoa que acessa
+class MenuPrincipal():
   inicio=int(input("""
     Olá, Bem-vindo a Clínica Morra Logo!
     Selecione a área que deseja acessar:
@@ -15,16 +8,13 @@ def main():
     resposta: """))
 
   if inicio==1:
-    import MenuUsuarios
-    main()
+    import MenuUsuario
   elif inicio==2:
     import MenuMedicos
-    main()
   elif inicio==3:
-    print('aba exames')
-    main()
+    import MenuExames
   else:
     print('\n')
     print('Resposta invalida! Tente novamente \n')
-    main() 
-main()
+    MenuPrincipal() 
+MenuPrincipal()

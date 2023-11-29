@@ -1,11 +1,8 @@
 import sqlite3
 from sqlite3 import Error
-
-
-
 error = Error
 
-def aba_de_busca():
+class buscarMedico():
   con = sqlite3.connect('projeto')
   cursor = con.cursor()
   cursor.execute(f"SELECT * FROM Servises")
@@ -22,7 +19,7 @@ def aba_de_busca():
   cont=int(input('Digite o numero do serviço:'))
   
   
-def aba_de_confirmacao():
+class aba_de_confirmacao():
   for linha in response:
     print(f'''\nDeseja confirmar as informações?(1)sim (2)não\n
 Nome: {response[cont-1][1]}
@@ -44,7 +41,7 @@ Resposta: ''')
     aba_de_confirmacao()
     
 
-def deletar_exame():
+class deletar_exame():
   certeza=int(input('''tem certeza que deseja deletar esse exame?
   (1)sim
   (2)não
@@ -62,7 +59,7 @@ def deletar_exame():
     print('resposta invalida')
     deletar_exame()
 
-def editar_exame():
+class editar_exame():
   global coluna
   coluna =''
   global coluna2
@@ -95,14 +92,14 @@ def editar_exame():
 
   print('\n\tExame Alterado com sucesso!!!')
   aba_de_confirmacao() 
-def update1():
+class update1():
   novoDado=str(input(f'Digite o {textoAlter}:'))
   con = sqlite3.connect('projeto')
   cursor = con.cursor()
   cursor.execute(f"UPDATE Servises SET {coluna} = '{novoDado}{floate}' WHERE ID={response[cont-1][0]}")
   con.commit()
   
-def update2():
+class update2():
   con = sqlite3.connect('projeto')
   cursor = con.cursor()
   cursor.execute(f"SELECT * FROM Doctor")
@@ -124,7 +121,7 @@ def update2():
   cursor.execute(f"UPDATE Servises SET {coluna2} = '{novoDado2}' WHERE ID={response[cont-1][0]}")
   con.commit()
 
-aba_de_busca()
+buscarMedico()
 aba_de_confirmacao()
 
     

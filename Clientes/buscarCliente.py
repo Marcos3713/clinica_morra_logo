@@ -1,10 +1,8 @@
 import sqlite3
 from sqlite3 import Error
-
-
 error = Error
 
-def aba_de_busca():
+class buscarMedico():
   global busca
   busca=str(input('''\/ Buscar Clientes \/
   informe o CPF:'''))
@@ -21,7 +19,7 @@ def aba_de_busca():
     print('\nDados do paciente. \n')
     aba_de_confirmacao()
 
-def aba_de_confirmacao():
+class aba_de_confirmacao():
   for linha in response:
     print(f'''\nID:{linha[0]}
 Nome:{linha[1]}
@@ -48,14 +46,14 @@ Complemento: {linha[8]}''')
     aba_de_confirmacao()
     
 
-def aba_de_confirmacao2(): 
+class aba_de_confirmacao2(): 
   confirmar=int(input(''' 
     (1) Tenta novamente
     (2) Cadastrar novo cliente
     (3) Retornar ao menu principal                   
     RESPOSTA:'''))
   if confirmar==1:
-    aba_de_busca
+    buscarMedico
   elif confirmar==2:
     import novoCliente
     novoCliente
@@ -64,7 +62,7 @@ def aba_de_confirmacao2():
   else:
     aba_de_confirmacao2()
 
-def deletar_cliente():
+class deletar_cliente():
   certeza=int(input('''tem certeza que deseja deletar os registros desse cliente?
   (1)sim
   (2)não
@@ -83,7 +81,7 @@ def deletar_cliente():
     print('resposta invalida')
     deletar_cliente()
 
-def editar_paciente():
+class editar_paciente():
   coluna=''
   textoAlter=''  
   edit=int(input('''Qual das informações deseja editar:
@@ -140,6 +138,6 @@ def editar_paciente():
   print('Usuario Alterado com sucesso!!!')
   aba_de_confirmacao()  
 
-aba_de_busca()
+buscarMedico()
 
     

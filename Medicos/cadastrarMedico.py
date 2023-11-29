@@ -3,7 +3,7 @@ import random
 from sqlite3 import Error
 error = Error
 
-def aba_cadastro_medico():
+class cadastrarMedico():
   global Gerar_id
   Gerar_id=random.randint(10000,100000)
   global Inserir_crm
@@ -14,22 +14,22 @@ def aba_cadastro_medico():
   cursor = con.cursor()
   cursor.execute(consulta_sql)
   linhas=cursor.fetchall()
-  #print(*linhas,sep='\n')
+  
   for linha in linhas:
     if Inserir_crm==linha[2]:
       print("\nCRM já existente\n")
-      aba_cadastro_medico()
+      cadastrarMedico()
       
   global Inserir_nome
-  Inserir_nome=str(input('Nome do medico: '))
+  Inserir_nome=str(input('Nome do médico: '))
   global Inserir_especialidade
-  Inserir_especialidade=str(input('especialidade:'))
+  Inserir_especialidade=str(input('Especialidade:'))
   
-def confirmar_informações_do_medico():
+class confirmar_informações_do_medico():
   confirmar=int(input(f'''\nDeseja confirmar as informações?(1)sim (2)não\n
 Nome:{Inserir_nome}
 CRM:{Inserir_crm}
-especialidade:{Inserir_especialidade}\n
+Especialidade:{Inserir_especialidade}\n
 Resposta: '''))
   
   if confirmar==1:
@@ -37,10 +37,11 @@ Resposta: '''))
     cursor = con.cursor()
     cursor.execute(f"INSERT INTO Doctor (_id,Name,CRM,Specialty) VALUES ({Gerar_id},'{Inserir_nome}','{Inserir_crm}','{Inserir_especialidade}')")
     con.commit()
-    print('Medico cadastrado com sucesso!!')
+    print('Médico cadastrado com sucesso!!')
+    import MenuMedicos
   else:
     print('Comece o cadastro novamente!')  
-    aba_cadastro_medico()
+    cadastrarMedico()
     
-aba_cadastro_medico()
+cadastrarMedico()
 confirmar_informações_do_medico()

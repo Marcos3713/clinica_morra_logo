@@ -1,4 +1,4 @@
-class MenuMedicos():
+def MenuMedicos():
   inicio=int(input("""        
   Área dos MÉDICOS!!
   o que você deseja fazer?:
@@ -8,9 +8,9 @@ class MenuMedicos():
   resposta: """))
 
   if inicio==1:
-    import Medicos.buscarMedico as buscarMedico
+    import buscarMedico
   elif inicio==2:
-    import Medicos.cadastrarMedico as cadastrarMedico
+    import addMedico
   elif inicio==3:
     import MenuPrincipal
   else:

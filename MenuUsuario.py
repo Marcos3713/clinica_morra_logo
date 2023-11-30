@@ -1,4 +1,4 @@
-class MenuUsuario():
+def MenuUsuario():
   inicio=int(input("""        
   Área de CLIENTES!!
   o que você deseja fazer?:
@@ -8,9 +8,9 @@ class MenuUsuario():
   resposta: """))
 
   if inicio==1:
-    import Clientes.buscarCliente as buscarCliente
+    import buscarCliente
   elif inicio==2:
-    import Clientes.novoCliente as novoCliente
+    import addCliente
   elif inicio==3:
     import MenuPrincipal
   else:

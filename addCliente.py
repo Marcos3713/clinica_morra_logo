@@ -3,7 +3,7 @@ import random
 from sqlite3 import Error
 error = Error
 
-class novoCliente():
+def novoCliente():
   global Gerar_id
   Gerar_id=random.randint(10000,100000)
   global Inserir_cpf
@@ -39,8 +39,21 @@ class novoCliente():
   Inserir_Cidade=str(input(' Cidade:'))
   global Inserir_UF
   Inserir_UF=str(input(' UF:'))
+  confirmar_informações_do_cliente()
+
+def MenudeRetorno():
+  retorno=int(input(''' 
+    (1) Tenta novamente
+    (2) Retornar ao Menu                   
+    RESPOSTA:'''))
+  if retorno==1:
+    novoCliente()
+  elif retorno==2:
+    import MenuPrincipal
+  else:
+    MenudeRetorno()
   
-class confirmar_informações_do_cliente():
+def confirmar_informações_do_cliente():
   confirmar=int(input(f'''
     Deseja confirmar as informações?
     Nome:{Inserir_nome}
@@ -59,10 +72,13 @@ class confirmar_informações_do_cliente():
     con.commit()
     print('\nCliente cadastrado com sucesso!!')
     import MenuPrincipal 
+  elif confirmar==2:
+    print('\n   O que deseja fazer?')
+    MenudeRetorno()
   else:
-    print('Comece o cadastro novamente!')  
-    novoCliente()
+    print('\n   Erro!! Resposta Invalida') 
+    MenudeRetorno()
     
 novoCliente()
-confirmar_informações_do_cliente()
+
 

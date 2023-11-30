@@ -2,7 +2,7 @@ import sqlite3
 from sqlite3 import Error
 error = Error
 
-class buscarMedico():
+def buscarPaciente():
   global busca
   busca=str(input('''\/ Buscar Clientes \/
   informe o CPF:'''))
@@ -12,14 +12,14 @@ class buscarMedico():
   cursor.execute(f"SELECT * FROM User WHERE cpf = {busca}")
   global response
   response = cursor.fetchall()
-  if cursor.fetchall()==[]: 
+  if response==[]: 
     print("\nUsuário não encontrado!")
     aba_de_confirmacao2()
   else:
     print('\nDados do paciente. \n')
     aba_de_confirmacao()
 
-class aba_de_confirmacao():
+def aba_de_confirmacao():
   for linha in response:
     print(f'''\nID:{linha[0]}
 Nome:{linha[1]}
@@ -35,34 +35,32 @@ Complemento: {linha[8]}''')
     (4)Retornar ao menu principal
     RESPOSTA:'''))
   if confirmar==1:
-    print('aba de marcar exame')
+    import marcarExame
   elif confirmar==2:
     editar_paciente()
   elif confirmar==3:
     deletar_cliente()
   elif confirmar==4:
-    print('Retornando...')
+    import MenuPrincipal
   else:
     aba_de_confirmacao()
     
-
-class aba_de_confirmacao2(): 
+def aba_de_confirmacao2(): 
   confirmar=int(input(''' 
     (1) Tenta novamente
     (2) Cadastrar novo cliente
     (3) Retornar ao menu principal                   
     RESPOSTA:'''))
   if confirmar==1:
-    buscarMedico
+    buscarPaciente()
   elif confirmar==2:
-    import novoCliente
-    novoCliente
+    import addCliente
   elif confirmar==3:
-    MenuUsuario.Menu_Usuarios()
+    import MenuPrincipal
   else:
     aba_de_confirmacao2()
 
-class deletar_cliente():
+def deletar_cliente():
   certeza=int(input('''tem certeza que deseja deletar os registros desse cliente?
   (1)sim
   (2)não
@@ -81,7 +79,7 @@ class deletar_cliente():
     print('resposta invalida')
     deletar_cliente()
 
-class editar_paciente():
+def editar_paciente():
   coluna=''
   textoAlter=''  
   edit=int(input('''Qual das informações deseja editar:
@@ -135,9 +133,14 @@ class editar_paciente():
   cursor = con.cursor()
   cursor.execute(f"UPDATE  User SET {coluna} = '{novoDado}' WHERE CPF={busca}")
   con.commit()
+  con = sqlite3.connect('projeto')
+  cursor = con.cursor()
+  cursor.execute(f"SELECT * FROM User WHERE cpf = {busca}")
+  global response
+  response = cursor.fetchall()
   print('Usuario Alterado com sucesso!!!')
   aba_de_confirmacao()  
 
-buscarMedico()
+buscarPaciente()
 
     

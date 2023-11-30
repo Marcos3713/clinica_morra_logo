@@ -3,7 +3,8 @@ import random
 from sqlite3 import Error
 error = Error
 
-class cadastrarMedico():
+def cadastrarMedico():
+  print('\n # Cadastrar um Novo Médico! \n')
   global Gerar_id
   Gerar_id=random.randint(10000,100000)
   global Inserir_crm
@@ -18,14 +19,27 @@ class cadastrarMedico():
   for linha in linhas:
     if Inserir_crm==linha[2]:
       print("\nCRM já existente\n")
-      cadastrarMedico()
+      MenudeRetorno()
       
   global Inserir_nome
   Inserir_nome=str(input('Nome do médico: '))
   global Inserir_especialidade
   Inserir_especialidade=str(input('Especialidade:'))
-  
-class confirmar_informações_do_medico():
+  confirmar_informações_do_medico()
+
+def MenudeRetorno():
+  retorno=int(input(''' 
+    (1) Tenta novamente
+    (2) Retornar ao Menu                   
+    RESPOSTA:'''))
+  if retorno==1:
+    cadastrarMedico()
+  elif retorno==2:
+    import MenuPrincipal
+  else:
+    MenudeRetorno()
+ 
+def confirmar_informações_do_medico():
   confirmar=int(input(f'''\nDeseja confirmar as informações?(1)sim (2)não\n
 Nome:{Inserir_nome}
 CRM:{Inserir_crm}
@@ -41,7 +55,6 @@ Resposta: '''))
     import MenuMedicos
   else:
     print('Comece o cadastro novamente!')  
-    cadastrarMedico()
+    MenudeRetorno()
     
 cadastrarMedico()
-confirmar_informações_do_medico()

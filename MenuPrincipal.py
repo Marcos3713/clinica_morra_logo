@@ -1,4 +1,4 @@
-class MenuPrincipal():
+def MenuPrincipal():
   inicio=int(input("""
     Olá, Bem-vindo a Clínica Morra Logo!
     Selecione a área que deseja acessar:

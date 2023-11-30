@@ -2,7 +2,8 @@ import sqlite3
 from sqlite3 import Error
 error = Error
 
-class buscarMedico():
+def buscarServico():
+  print('\/ Buscar Serviço \/')
   con = sqlite3.connect('projeto')
   cursor = con.cursor()
   cursor.execute(f"SELECT * FROM Servises")
@@ -17,9 +18,9 @@ class buscarMedico():
     print(cont,"{:<8} {:<30} {:<10} {:<10} {:<10}".format(id_, nameexame, valor,nameDoctor , responsable))
     cont=cont+1
   cont=int(input('Digite o numero do serviço:'))
+  aba_de_confirmacao()
   
-  
-class aba_de_confirmacao():
+def aba_de_confirmacao():
   for linha in response:
     print(f'''\nDeseja confirmar as informações?(1)sim (2)não\n
 Nome: {response[cont-1][1]}
@@ -40,8 +41,7 @@ Resposta: ''')
   else:
     aba_de_confirmacao()
     
-
-class deletar_exame():
+def deletar_exame():
   certeza=int(input('''tem certeza que deseja deletar esse exame?
   (1)sim
   (2)não
@@ -59,7 +59,7 @@ class deletar_exame():
     print('resposta invalida')
     deletar_exame()
 
-class editar_exame():
+def editar_exame():
   global coluna
   coluna =''
   global coluna2
@@ -92,14 +92,20 @@ class editar_exame():
 
   print('\n\tExame Alterado com sucesso!!!')
   aba_de_confirmacao() 
-class update1():
+def update1():
   novoDado=str(input(f'Digite o {textoAlter}:'))
   con = sqlite3.connect('projeto')
   cursor = con.cursor()
   cursor.execute(f"UPDATE Servises SET {coluna} = '{novoDado}{floate}' WHERE ID={response[cont-1][0]}")
   con.commit()
-  
-class update2():
+  con = sqlite3.connect('projeto')
+  cursor = con.cursor()
+  cursor.execute(f"SELECT * FROM User WHERE cpf = {busca}")
+  global response
+  response = cursor.fetchall()
+  print('Alterado com sucesso')
+  aba_de_confirmacao()  
+def update2():
   con = sqlite3.connect('projeto')
   cursor = con.cursor()
   cursor.execute(f"SELECT * FROM Doctor")
@@ -119,9 +125,16 @@ class update2():
   cursor = con.cursor()
   cursor.execute(f"UPDATE Servises SET {coluna} = '{novoDado}' WHERE ID={response[cont-1][0]}")
   cursor.execute(f"UPDATE Servises SET {coluna2} = '{novoDado2}' WHERE ID={response[cont-1][0]}")
+  con = sqlite3.connect('projeto')
+  cursor = con.cursor()
+  cursor.execute(f"SELECT * FROM User WHERE cpf = {busca}")
+  global response
+  response = cursor.fetchall()
   con.commit()
+  print('Alterado com sucesso')
+  aba_de_confirmacao()
 
 buscarMedico()
-aba_de_confirmacao()
+
 
     

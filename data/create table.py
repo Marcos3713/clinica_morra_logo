@@ -6,5 +6,6 @@ error = Error
 
 con = sqlite3.connect('projeto')
 cursor = con.cursor()
-
-cursor.execute("CREATE TABLE Servises(ID AUTO INCREMENT PRIMARY KEY,NameOfExame VARCHAR2 (100),Valor VARCHAR2 (20),Doctor_id VARCHAR2 (12),ResponsibleDoctor VARCHAR2(25))")
+cursor.execute(f"UPDATE Servises SET Doctor_id = '18165' WHERE ID=56706")
+con.commit()
+print('exame deletado com sucesso')

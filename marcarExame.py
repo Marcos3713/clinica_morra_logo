@@ -1,3 +1,7 @@
+import sqlite3
+from sqlite3 import Error
+error = Error
+
 def buscarPaciente():
   global busca
   busca=str(input('''\/ Buscar Clientes \/
@@ -26,9 +30,10 @@ Telefone:{linha[4]}
   confirmar=int(input('''
 (1) Confirmar Cliente
 (2) Tentar achar outro cliente
-(3) Retornar ao Menu'''))
+(3) Retornar ao Menu
+Resposta:'''))
   if confirmar==1:
-    buscarMedico
+    escolherExame()
   elif confirmar==2:
     buscarPaciente()
   elif confirmar==3:
@@ -51,3 +56,45 @@ def aba_alternativa():
     import MenuPrincipal
   else:
     aba_alternativa()
+
+def escolherExame():
+  global response2
+  escolherTipo=int(input('''\nQual tipo de serviço deseja fazer:
+(1) Consulta
+(2) Exame
+Resposta: '''))
+  if escolherTipo==1:
+    print('\/ Buscar Serviço \/')
+    con = sqlite3.connect('projeto')
+    cursor = con.cursor()
+    cursor.execute(f"SELECT * FROM Servises")
+    cont=1
+    response2 = cursor.fetchall()
+    print("  {:<8} {:<15} {:<10} {:<10} {:<40} {:<10}".format("ID", "Nome", "Valor","ID Médico","Médico","Tipo"))
+    print('-'*100)
+    for v in response2:
+      name, age, perc,bla,ble,bli = v
+      print(cont,"{:<8} {:<15} {:<10} {:<10} {:<40} {:<10}".format(name, age, perc,bla,ble,bli))
+      cont=cont+1
+      cont=int(input('Digite o numero do exame escolhido:'))
+    aba_de_confirmacao()
+  elif escolherTipo==2:
+    print('\/ Buscar Serviço \/')
+    con = sqlite3.connect('projeto')
+    cursor = con.cursor()
+    cursor.execute(f"SELECT * FROM Servises")
+    cont=1
+    response2 = cursor.fetchall()
+    print(response2)
+    print("  {:<8} {:<15} {:<10} {:<10} {:<40} {:<10}".format("ID", "Nome", "Valor","ID Médico","Médico","Tipo"))
+    print('-'*100)
+    for g in response2:
+      name, age, perc, bla, ble, bli = g
+      print(cont,"{:<8} {:<15} {:<10} {:<10} {:<40} {:<10}".format(name, age, perc,bla,ble,bli))
+      cont=cont+1
+    cont=int(input('Digite o numero do exame escolhido:'))
+  else:
+    print('Resposta invalida!!')
+    escolherExame()
+
+buscarPaciente()

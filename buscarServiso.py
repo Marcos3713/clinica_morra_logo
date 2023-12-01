@@ -10,23 +10,24 @@ def buscarServico():
   global response
   global cont
   cont=1
-  response = cursor.fetchall() 
-  print("  {:<8} {:<30} {:<10} {:<10} {:<10}".format("ID", "Exame", "Valor","Medico","Especialidade"))
+  response = cursor.fetchall()
+  print("  {:<8} {:<15} {:<10} {:<10} {:<40} {:<10}".format("ID", "Nome", "Valor","ID Médico","Médico","Tipo"))
   print('-'*100)
   for v in response:
-    id_, nameexame, valor,nameDoctor , responsable= v
-    print(cont,"{:<8} {:<30} {:<10} {:<10} {:<10}".format(id_, nameexame, valor,nameDoctor , responsable))
+    name, age, perc,bla,ble,bli = v
+    print(cont,"{:<8} {:<15} {:<10} {:<10} {:<40} {:<10}".format(name, age, perc,bla,ble,bli))
     cont=cont+1
-  cont=int(input('Digite o numero do serviço:'))
+  cont=int(input('Digite o numero do exame escolhido:'))
   aba_de_confirmacao()
   
 def aba_de_confirmacao():
-  for linha in response:
-    print(f'''\nDeseja confirmar as informações?(1)sim (2)não\n
+  global ide
+  ide=response[cont-1][0]
+  print(f'''\nInformações\n
+Id:{response[cont-1][0]}          
 Nome: {response[cont-1][1]}
 valor: {response[cont-1][2]}
-Medico resposavel: Dr(a).{response[cont-1][3]} - {response[cont-1][4]} \n
-Resposta: ''')
+Medico resposavel: {response[cont-1][4]}''')
   confirmar=int(input(''' 
     (1) editar informações
     (2) deletar Exame                 
@@ -37,7 +38,7 @@ Resposta: ''')
   elif confirmar==2:
     deletar_exame()
   elif confirmar==3:
-    print('Retornar ao menu')
+    import MenuPrincipal
   else:
     aba_de_confirmacao()
     
@@ -96,13 +97,7 @@ def update1():
   novoDado=str(input(f'Digite o {textoAlter}:'))
   con = sqlite3.connect('projeto')
   cursor = con.cursor()
-  cursor.execute(f"UPDATE Servises SET {coluna} = '{novoDado}{floate}' WHERE ID={response[cont-1][0]}")
-  con.commit()
-  con = sqlite3.connect('projeto')
-  cursor = con.cursor()
-  cursor.execute(f"SELECT * FROM User WHERE cpf = {busca}")
-  global response
-  response = cursor.fetchall()
+  cursor.execute(f"UPDATE Servises SET {coluna} = '{novoDado}{floate}' WHERE ID={ide}")
   print('Alterado com sucesso')
   aba_de_confirmacao()  
 def update2():
@@ -123,18 +118,13 @@ def update2():
   novoDado2=f"Dr(a).{response2[cont-1][1]} - {response2[cont-1][3]}"
   con = sqlite3.connect('projeto')
   cursor = con.cursor()
-  cursor.execute(f"UPDATE Servises SET {coluna} = '{novoDado}' WHERE ID={response[cont-1][0]}")
-  cursor.execute(f"UPDATE Servises SET {coluna2} = '{novoDado2}' WHERE ID={response[cont-1][0]}")
-  con = sqlite3.connect('projeto')
-  cursor = con.cursor()
-  cursor.execute(f"SELECT * FROM User WHERE cpf = {busca}")
-  global response
-  response = cursor.fetchall()
+  cursor.execute(f"UPDATE Servises SET {coluna} = '{novoDado}' WHERE ID={ide}")
+  cursor.execute(f"UPDATE Servises SET {coluna2} = '{novoDado2}' WHERE ID={ide}")
   con.commit()
   print('Alterado com sucesso')
   aba_de_confirmacao()
 
-buscarMedico()
+buscarServico()
 
 
     

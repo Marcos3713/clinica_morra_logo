@@ -6,6 +6,6 @@ error = Error
 
 con = sqlite3.connect('projeto')
 cursor = con.cursor()
-cursor.execute(f"UPDATE Servises SET Doctor_id = '18165' WHERE ID=56706")
+cursor.execute(f"ALTER TABLE Exams DROP COLUMN Specialty_Doctor;")
 con.commit()
 print('exame deletado com sucesso')

@@ -1,6 +1,9 @@
 import sqlite3
+import random
+import datetime
 from sqlite3 import Error
 error = Error
+hora_atual=datetime.datetime.now()
 
 def buscarPaciente():
   global busca
@@ -20,6 +23,7 @@ def buscarPaciente():
     aba_de_continuacao()
 
 def aba_de_continuacao():
+  global linha
   for linha in response:
     print(f'''\nID:{linha[0]}
 Nome:{linha[1]}
@@ -58,6 +62,7 @@ def aba_alternativa():
     aba_alternativa()
 
 def escolherExame():
+  global escolherTipo
   global response2
   escolherTipo=int(input('''\nQual tipo de serviço deseja fazer:
 (1) Consulta
@@ -67,7 +72,8 @@ Resposta: '''))
     print('\/ Buscar Serviço \/')
     con = sqlite3.connect('projeto')
     cursor = con.cursor()
-    cursor.execute(f"SELECT * FROM Servises")
+    cursor.execute(f"SELECT * FROM Servises WHERE type=1")
+    global cont
     cont=1
     response2 = cursor.fetchall()
     print("  {:<8} {:<15} {:<10} {:<10} {:<40} {:<10}".format("ID", "Nome", "Valor","ID Médico","Médico","Tipo"))
@@ -76,13 +82,13 @@ Resposta: '''))
       name, age, perc,bla,ble,bli = v
       print(cont,"{:<8} {:<15} {:<10} {:<10} {:<40} {:<10}".format(name, age, perc,bla,ble,bli))
       cont=cont+1
-      cont=int(input('Digite o numero do exame escolhido:'))
-    aba_de_confirmacao()
+    cont=int(input('Digite o numero do exame escolhido:'))
+    finalizacao()
   elif escolherTipo==2:
-    print('\/ Buscar Serviço \/')
+    print('\n\/ Buscar Serviço \/')
     con = sqlite3.connect('projeto')
     cursor = con.cursor()
-    cursor.execute(f"SELECT * FROM Servises")
+    cursor.execute(f"SELECT * FROM Servises WHERE type=1")
     cont=1
     response2 = cursor.fetchall()
     print(response2)
@@ -93,8 +99,25 @@ Resposta: '''))
       print(cont,"{:<8} {:<15} {:<10} {:<10} {:<40} {:<10}".format(name, age, perc,bla,ble,bli))
       cont=cont+1
     cont=int(input('Digite o numero do exame escolhido:'))
+    finalizacao()
   else:
     print('Resposta invalida!!')
     escolherExame()
 
+def finalizacao():
+  if escolherTipo==1:
+    tipo="Consulta"
+  elif escolherTipo==2:
+    tipo="Exame"
+  Data=str(input('\nDigite a data da realização do exame(dd/mm):'))
+  time=str(input('\nDigite a hora de realização do exame(hh:mm):'))
+  request=hora_atual
+  global Gerar_id
+  Gerar_id=random.randint(10000,100000)
+  con = sqlite3.connect('projeto')
+  cursor = con.cursor()
+  cursor.execute(f"INSERT INTO Exams (_id,User_id,Doctor_id,ExamType,ExamDate,RequestDate,NameUser,CPF_User,Birhday_User,Telephone_User,Name_Doctor,ExamName) VALUES ({Gerar_id},'{linha[0]}','{response2[cont-1][3]}','{tipo}','{Data} - {time}','{hora_atual}','{linha[1]}','{linha[2]}','{linha[3]}','{linha[4]}','{response2[cont-1][4]}','{response2[cont-1][1]}')")
+  con.commit()
+  print('Agendado com sucesso')
+  import MenuPrincipal 
 buscarPaciente()

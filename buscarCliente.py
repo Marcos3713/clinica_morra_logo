@@ -29,10 +29,10 @@ Telefone:{linha[4]}
 Endereço:{linha[5]}, {linha[6]} - {linha[7]}, {linha[9]}/{linha[10]}
 Complemento: {linha[8]}''')
   confirmar=int(input(''' 
-    (1)Marcar Exame
-    (2)editar informações
-    (3)deletar cliente                  
-    (4)Retornar ao menu principal
+    (1) Marcar Exame
+    (2) Editar informações
+    (3) Deletar cliente                  
+    (4) Retornar ao menu principal
     RESPOSTA:'''))
   if confirmar==1:
     import marcarExame
@@ -73,6 +73,7 @@ def deletar_cliente():
     cursor.execute(f"DELETE FROM User WHERE cpf = {cord}")
     con.commit()
     print('Paciente deletado com sucesso')
+    aba_de_confirmacao2()
   elif certeza==2:
     aba_de_confirmacao()
   else:
